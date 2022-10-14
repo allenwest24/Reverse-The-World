@@ -1,0 +1,6 @@
+I opened the assembly file in Atom and began looking through it. 
+It really is a very simple program in C but written in assemvly with comments in C.
+You could see that the input would be bit-shifted >> 2.
+Then the flag would be (Hero{%d:%d}, input, modified)
+Since the input was modified  by >> 2 to get 1337404 (we can easily see this is what it is being compared to) then we just had to shfit it back << 2.
+The final flag was Hero{5349616:1337404}
