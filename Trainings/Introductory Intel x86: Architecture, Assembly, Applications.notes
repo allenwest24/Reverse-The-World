@@ -1,0 +1,65 @@
+Disclaimer: These notes were taken while watching an OpenSecurity Course (https://www.youtube.com/watch?v=H4Z0S9ZbC0g&list=PL038BE01D3BAEFDB0&index=2)
+
+Skipping refreshers..
+
+Architecture - Registers:
+- Small memory storage areas (volatile)
+- 8 general purpose + instruction pointer
+- x86-32 has 32 bit registers.
+
+Architecture - Register Conventions:
+- There is loose syntax guidance for register use. They are normally used for certain conventions, but this is only for standardization and is not required.
+- EAX storeds function return values
+- EBX is the base pointer to the data section
+- ECX is the counter for loops and such
+- EDX is the I/O pointer
+- ESI is the soruce pointer for string operations
+- EDI is the destination pointer for string operations
+- ESP is the stack pointer
+- EBP is the stack frame base pointer
+- EIP is the pointer to the next instruction to execute.
+- Caller save registers means I am the caller of another function and I can assume they are going to destroy the values in certain registers (EAX, EDX, ECX) so I need to save these if I care about them.
+- Callee save registers is the opposite of a caller save register. They need to make sure they dont destroy certain registers (EBP, EBX, ESI, EDI)
+
+Architecture - Registers - 8/16/32 bit addressing:
+- There are actually smaller portions of registers that you are allowed to access.
+- When you move something into a 32 bit register, you could grab only abyte back out. 
+- The subsections are two letters long (Ex: AX, AH)
+- These are called short forms and are just subsections of larger registers.
+
+Architecture - EFLAGS:
+- Register that is 32 bits (E = extended)
+- Series of signle bits with specific names
+- Zero Flag (ZF) is an example of a specific bit that is used as a flag when the CPU is executing instructions.
+- Central place to compare against so you don't have to track where a given value is.
+- This is used for conditional logic.
+
+First Instruction - NOP:
+- Does nothing, jsut there to pad bytes or something like that
+- This could be to pad out bounderies.
+- Used to make certain buffer overflows more reliable.
+- Alias for the XCHG (E)AX, (E)AX. 
+
+The Stack:
+- Conceptual area of main memory (RAM) which is designated by tthe OS. whena. program is started
+- Diffwewnt start addresses by OS.
+- Last-in-First-Out (LIFO/FILO) data sturcture where data is pushed on to the top of the stack and popped off the top.
+- Like a stack of plate, if you want ot get the middle plate you have to remove the top ones first.
+- The stack grows toward lower memory addresses. This is represented different ways by different people.
+- ESP always points at the top of the stack, or the data that is being used at the top of the stack.
+- Anything that is at a lower address is consdiered undefined, even if there is data living there.
+- Only read form the top of the stack or below it for programs.
+- Stack keeps track of which functions were called before the current one.
+- Holds variables
+- Frequently used to pass arguments to the next instrcution to be called.
+
+Second Instruction - PUSH:
+- Can either be an immediate or the value in a register.
+- Side effect of the push instrcution is that the stack pointer moves by 4
+- Decrement ESP by 4.
+- Data gets added to RAM wherever the stack pointer (ESP) is and thats why the ESP register must be moved up (decremented)
+
+POP:
+- Take something off the top of the stack.
+- PUSH backwards
+- 
