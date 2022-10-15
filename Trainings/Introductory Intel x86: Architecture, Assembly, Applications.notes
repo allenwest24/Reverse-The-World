@@ -62,4 +62,43 @@ Second Instruction - PUSH:
 POP:
 - Take something off the top of the stack.
 - PUSH backwards
-- 
+
+Calling Conventions - cdecl:
+- Most common for C code
+- push onto stack right to left
+- called fucntion saves the old frame pointer, saves the address on the stack and sets up a new stack frame.
+- eax or edx:eax returns the result for primitive data types.
+- caller is responsible for cleaning up the stack. the callee is responsible in stdcall
+
+Calling Conventions - stdcall:
+- Only seen by Microsoft C++ code
+
+CALL - Call procedure:
+- transfers control to a different function (moves eip)
+- pushes the address to the next instruction onto the stack
+- used by RET when a function is done.
+- Changes eip to an address in the instruction
+
+RET - return from procedure:
+- two forms
+  - Pop the top of the stack into eip, used just as 'ret', used by cdecl
+  - pop the top of the stack into eip and add a constant number of bytes to esp, ret 0x8, used by stdcall
+
+MOV - move:
+- can move register to register
+- memory to register, register to memory
+- immediate to register, immediate to memory
+- never memory to memory
+- memory addresses are given in r/m32
+
+General Stack Frame Operation:
+- pretending for now that main() is the very first thing
+- reserves places on the stack for its local variables
+- if main wants to call some sub-routing (main is the caller), it calls saves on registers it wants to save.
+- main pushes onto the stack the arguments it wants to pass down to the next function.
+- pushes onto the stack the address of the saved return address for when the callee is done.
+- first thing the subroutine does (sub()) is save the frame pointer (top of the local variables) onto the stack.
+- Saves the previous frame pointer and then saves its own.
+- saves claee save registers for any sub sub routines it want to run.
+- saves local variables on the stack decalred within the function
+- when sub wants to call a sub2 it does the same thing that main did.
