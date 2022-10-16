@@ -103,4 +103,13 @@ General Stack Frame Operation:
 - saves local variables on the stack decalred within the function
 - when sub wants to call a sub2 it does the same thing that main did.
 
+Debugger Features:
+- step into takes us to the target of the instruction.
+- step over, do the subroutine and come back to the next instruction.
+- step out takes you out of a subroutine
 
+r/m32 Addressing Form:
+- fromt he intel manuals, more complicated name normally
+- theres a sequence of increasingly complex name to specify access of registers or memory
+- in intel syntax, with the exception of 1 syntax, with [] enclosing a register, we are going to memory to pull the value from memory.
+- [base + index*scale + displacement]
