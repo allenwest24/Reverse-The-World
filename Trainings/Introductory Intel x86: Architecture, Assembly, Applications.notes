@@ -113,3 +113,58 @@ r/m32 Addressing Form:
 - theres a sequence of increasingly complex name to specify access of registers or memory
 - in intel syntax, with the exception of 1 syntax, with [] enclosing a register, we are going to memory to pull the value from memory.
 - [base + index*scale + displacement]
+
+Control Flows:
+- two forms, conditional and unconditional
+
+JMP - Jump
+- Set eip to something right now
+- call is a more elaborate form that stores more things. 
+- can also jump up to 4 bytes forward or backwards
+
+Jcc - Jump if condition is met
+- tons of types actually
+- JNE == JNZ
+
+Some notable jcc Instructions:
+- JZ/JE
+- JNZ/JNE
+- JLE/JNG
+- JBE
+- JB
+- Not worth  memorizing these flags because often a debugger will worry about that
+
+Flag Setting:
+- Before you do a conditional jump, you need to set the conditional flags for you.
+- Typically done with CMP, TEST, or whatever instructions are already inline and happen to have flag-setting side-effects
+
+CMP - Compare two operands
+- subtract the second operand from the firsta dn then set the status flags in the same manner as the SUB instruction
+- different from SUB because in sub the result needs to be stored. With CMP we just keep the flags.
+- Modifies CF, OF, SF, AF, and PF
+
+TEST - logical compare
+- computed the bitwise logical AND.
+- No result stored, just flags set.
+
+AND -Logical AND
+- destination operant can be r/m32 or register, same for source. Same rules apply for OR and XOR
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
