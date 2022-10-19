@@ -150,6 +150,31 @@ TEST - logical compare
 AND -Logical AND
 - destination operant can be r/m32 or register, same for source. Same rules apply for OR and XOR
 
+SHL - Shift Logical Left
+- Can be explicitly used with the C "<<" operator
+- Moving it to the left is multiplying by 2
+- first operand (source and destination) is an r/m32
+- second operand is either cl (lowest byte of ecx), or a 1 byte immediate.
+- The second operand is the number of places to shift.
+- It multiplies by 2 every shift left.
+- Bits shifted off the left hand side are "shifted into" (set) the carry flag (CF)
+
+SHR - Shift Logical Right
+- Can be explicitly used with the C ">>" operator
+- First operand (source and destination) operrand is an r/m32
+- second operand is either cl (lowest byte of ecx), or a 1 byte immediate.
+- The second operand is the number of places to shift.
+- It divides by 2 every shift right.
+- Bits shifted off the right hand side are "shifted into" (set) the carry flag (CF)
+
+IMUL - Signed Multiply
+- Three forms, one, two, or three operands.
+- Always stored to the left-most if mroe than one operand, and in eax if one oeprand.
+
+DIV - Unisgned Divide
+- Two forms, ax by r/m8 (al = quotient, ah = remainder), and edx:eax by r/m32 (eax = quotient, edx = remainder)
+- 0 exception if divided by 0.
+
 
 
 
