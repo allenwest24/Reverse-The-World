@@ -175,6 +175,13 @@ DIV - Unisgned Divide
 - Two forms, ax by r/m8 (al = quotient, ah = remainder), and edx:eax by r/m32 (eax = quotient, edx = remainder)
 - 0 exception if divided by 0.
 
+REP STOS - Repeat Store String
+- family of rep operations repeat a single instuction multiple times.
+- All rep ops use ecx register as a coutner to determine how many times to loop through the instruction, decrementing ecx each time.
+- Either moves one byte at a time or one dword at a time.
+- Either fill byte at [edi] with al or fill dword at [edi] with eax
+- moves the edi register forward one byte or one dword at a time so that the repeated store operation is storing into consecutive locations
+- so there are 3 pieces which must happen before the acryal rep stos occurs: set edi to the start destination, (e)ax to the values store, and ecx to the number of times to store
 
 
 
