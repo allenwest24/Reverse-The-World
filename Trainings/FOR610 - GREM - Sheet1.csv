@@ -1,0 +1,46 @@
+Term,Ellaborate,Book,Page
+Malware ,"- Code that is used to perform malicious actions.
+- Less about capabilities and more about the use.
+- Typically a person behind the malware.",1,5
+Input to REM Staff,"- Verbal reports
+- suspicious files
+- file system image
+- memory image
+- network logs
+- anomaly observations",1,10
+Output from REM Staff,"- What malware does
+- How to identify it
+- attacker's profile
+- IR recommendations
+- reports and IOC's
+- Malware trends",1,10
+Formal Report of Malicious Program,"- Summary of the analysis: key takeaways
+- Identifications: file type, name, size, hashes, malware names, current detection capabilities
+- Characteristics: capabilities for infecting files, self-preservation, spreading, leaking data, interation with attacker, etc.
+- Dependencies: Files and network resources needed, OS versions, custom DLLs, executables, URLs, scripts
+- Behavioral and code analysis findings: behavioral, static, and dynamic observations.
+Supporting figures: logs, pics, strings, functions
+- Incident recommendations: IOCs, eradication steps.",1,11
+Virus Total,- Exports: table showing list of functions that were designed to be invoked outside of the DLL,1,14
+Hybrid Analysis by Payload Security,"- Free website
+- Details on behavior of specimen
+- Detonates sample in a sandbox
+- Identifies mutants",1,15
+Mutant (mutex),"-  serves as a flag that programs can use to serialize access to a
+resource.
+- These flags are sometimes used by malware to avoid reinfecting the host, acting as infection
+markers.",1,15
+PassiveTotal,"- Provides historic information about the IP addresses to
+which malware resolved over time, network details for those IPs, and indicators that those resources were associated with malicious activities.",1,16
+Open Threat Exchange,"- Details about hostnames, mutant values, dropped files, signatures",1,17
+Network Traffic to/from malware,"- Beaconing
+- C2
+- Exfil",1,19
+Beaconing,- periodic messages to adversary with info on the state of the program and host,1,19
+Command and Control,"- Obtaining instructions from the adversary
+regarding actions that the specimen needs to perform, such as upgrade itself or scan a host.",1,19
+Exfiltration,"- Sending stolen data, such as keystroke logs, to the adversary.",1,19
+Self-Defending,"- Detect virtualization
+- Detect debuggers or dissasemblers",1,29
+Patching,- Editing parts of the malware that detects virtualization or tools.,1,30
+,,,32
