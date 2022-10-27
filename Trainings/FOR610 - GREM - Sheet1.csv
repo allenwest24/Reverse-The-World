@@ -43,4 +43,36 @@ Exfiltration,"- Sending stolen data, such as keystroke logs, to the adversary.",
 Self-Defending,"- Detect virtualization
 - Detect debuggers or dissasemblers",1,29
 Patching,- Editing parts of the malware that detects virtualization or tools.,1,30
-,,,32
+CloneZilla,- Disk cloning for use of physical devices instead of VMs.,1,32
+FOG,- Disk cloning for use of physical devices instead of VMs.,1,32
+dd,- Disk cloning for use of physical devices instead of VMs.,1,32
+Deep Freeze,"- Snapshot functionality but for physical devices.
+- Not as reliable
+- Malware can target aspect of these programs.",1,32
+RollBack Rx,"- Snapshot functionality but for physical devices.
+- Not as reliable
+- Malware can target aspect of these programs.",1,32
+PXE Booting,- Restore a clan system image over the network.,1,32
+Static Properties Analysis Tools,"- PeStudio
+- strings
+- CFF Explorer
+- perframe
+- Detect It Easy",1,33
+Behavioral Analysis Tools,"- Process Hacker
+- Process Monitor
+- RegShot
+- Wireshark
+- fakedns",1,33
+Code Analysis Tools,"- Ghidra
+- x64dbg/x32dbg
+- OllyDumpEx
+- jmp2it
+- Scylla",1,33
+strings,"- Present on most linux distributions
+- By default extracts only ASCII-encoded strings
+- extract unicode strings by specifying --encoding=l
+- -a examines the whole file rather than solely the initialized and loaded sections of object files.",1,42
+pestr,"- Similar to strings utility
+- part of the Pev toolkit which is for examining windows executables
+- --net extracts only those strings that look like network related details such as hostnames and IP addresses.",1,42
+,,,43
