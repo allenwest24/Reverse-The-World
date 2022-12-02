@@ -263,3 +263,205 @@ Behavioral Interaction Observation Tools (Additional),"- TcpLogView: Maintains a
 - PolarProxy: Intercepts and decrypts SSL/TLS traffic in the lab.
 - ApateDNS: DNS server for redirecting hostname resolution requests; similar to fakedns but runs on Windows.
 - FakeNet-NG: Intercepts network traffic in the lab, emulating common protocols; similar to INetSim but runs on Windows.",1,124
+Code lifecycle,"- Source code is translated into object code by a compiler
+- Object code is combined wiht libraries to create an executable.
+- OS reads executable info, allocates memory, and loads libraries into memory.
+- Control is transferred too the code to execute.",2,5
+Ghidra,"- Software reverse engineering sutie of tools developed by the NSA research directorate.
+- Supports variety of processor architectures and runs on various platforms.
+- Requires Java Runtime and Development Kit
+- Key features include its ability to disassemble and decompile code and support scripts and plugins for extensibility.
+- Competitors are IDA, Radare/Cutter, Binary Ninja, Hopper and Capstone.
+- File vs project depending on multi-component cases
+- Single user and shared options
+- Drag and drop sample into the project window
+- CodeBrowser is the built-in tool for reviewing the dissassembled program and can be used by double-clicking t he program.
+- Auto-analysis includes dissassembling code based on the flow of execution, identifying functions and generating cross-references to those functions.
+- “WindowsPE x86 Propagate External Parameters.” This analysis option will attempt to identify a function’s arguments as named in Microsoft’s API documentation and list them in the comments.
+- Listing view presents the target program’s code and data.
+- Jump to a different location in the code using the Program Trees window on the top-left. This window breaks up the Windows executable into its headers and sections.
+- in .text we have a 32 bit address for the location of code in memory after the program is loaded, not the location on disk, and an x86 assembly instrcution.
+- The Function Graph view is helpful for visualizing loops and complex conditionals within a function, but the Listing view is more compact and is easier for some people to navigate.
+- Green arrow for if true, red arrow for if false, blue for unconditional jump.
+- Symbol Tree window lists categories including Imports (program dependencies), Exports (entry points into the program), and internal functions. A “symbol” is a name associated with an address.
+- access imports via Window > Symbol References.",2,6-10
+Decompiling,- Provides C representation of dissassembly.,2,6
+Sections (Windows Executable),"The section names listed here are typical:
+• .text: Contains executable code
+• .rdata: Contains read-only data
+• .data: Contains data
+• .reloc: Contains relocation data to fix up addresses in the file if it is not loaded at its preferred address",2,12
+Exports,"- exports provide insight into functions offered by the
+executable.
+- It is normal for DLLs to have exported functions, but executables (such as our example) normally do not have multiple exports.",2,15
+Import Address Table (IAT),- (IAT) lists the APIs (functions) used by the program that are contained in external libraries (DLLs).,2,16
+Operating system,"- Purpose is to manage hardware
+- Everything else the OS does is to provide managed access for user space code.
+- Allocating memory requires managedment of the system RAM.",2,18
+strace (strace-for-NT),- tool to monitor system calls made by a program,2,18
+System Monitor,- Sysinternals tool to monitor system calls for registry and file-related activity.,2,18
+Ex (extended),- Naming convention Microsoft uses to note that a fucntion is updated and is not compatible with the past version.,2,19
+ANSI (A),- Microsoft uses to show whether and cuntion supports ANSI (8-bit character),2,19
+Wide character (W),"- Microsoft naming convention to shwo a function supports wide characters (16-bit character) strings.
+- A wide character is a 2-byte character representation, specifically UTF-16 which is a unicode character encoding.",2,19
+operand,"- An instruction (depending on the operation) can take 0, 1, or 2 operands, where the operands can be a register, a location in memory, or an immediate value (such as the number 0x6453).
+- The different ways of specifying where to read and write data are collectively called operand addressing modes.
+- Addressing modes use implied operands, where they don't need to be given as arguments.
+- Some examples of implicit operands are the stack operations, which move data to and from the extended stack pointer (ESP) register.",2,22
+register-based CPU,"- a CPU with  on-chiip memory locations called registers
+- most widespread
+- grabs instructions from memory,. decodes, and performs the action",2,23
+registers (general purpose),"- EAX, EBX, ECX, EDX, EBP, ESP, ESI, and EDI
+- Can have a specific purpose depending on the intsturction calling them",2,24
+EAX,"- Register used by default for addition and multiplication
+- Also stores the return values of a function",2,24
+ECX,- Counter for looping,2,24
+EBP,- Used to reference arguments passed intoa fucntion as well as the local variabls within a fucntion.,2,24
+ESP,- register used to point to the last item on the stack and is affected by stack-related functions,2,24
+ESI/EDI,- Registers used for memory transfer instrcutions.,2,24
+registers (special use),"- Registers witha  specific purpose
+- EIP, EFLAGS",2,25
+EIP,"- register that contains the address of the next instruction to execute. 
+- RIP for 64bit",2,25
+EFLAGS,- Bits on this register used to represent outcome of computations and to control the operation of the CPU.,2,25
+Registers (segment),"- CS, DS, ES, FS, GS, and SS
+- Used to describe different segments of memory",2,25
+CS,- default segment register when fetching instructions,2,25
+DS,- Defaults segment register for accessing data with the ESI and EDI registers,2,25
+SS,- default segment register for accessing data with teh ESP register.,2,25
+register (low and high bits),"In other words, the naming scheme for EAX, EBX, ECX, and EDX is as follows:
+• E<letter>X == dword (32-bit) value of the register
+• <letter>X == low word (16-bit) value of the register
+• <letter>H == high byte (8-bit) of the <letter>X value of the register
+• <letter>L == low byte (8-bit) of the <letter>X value of the register
+EAX would use the value 0x68776453. An
+instruction that references the AX register would get the low word (the low 16 bits) of EAX, meaning it would use the value 0x6453. An instruction that references the AH register would get the high byte (the high 8 bits) of the AX register, meaning it would use the value 0x64. Finally, if an instruction references the AL register, it would get the low byte (the low 8 bits) of the AX register, meaning it would use the value 0x53.",2,26
+word,"- Natural size of a processors unit of data (typically 16)
+- dword is 32
+- qword is 64",2,27
+dword,"- twice the size of a word. In practical terms, this means a dword is 32 bits (4 bytes)
+long.",2,27
+qword,- quadword or 64 bits,2,27
+pointer,"- a variable that contains the address of some location in memory.
+- When the address that the pointer points to is accessed, it is called ""dereferencing,"" because the pointer references (points to) another location in memory
+- There are also efficiency reasons for using pointers. For instance, rather than copying an entire data structure around in memory, it is far more efficient to copy the value of a pointer (which is typically 4 bytes on a 32-bit system).",2,28
+direct addressing,"- when the address is specified as an operand
+- many tools suse brakcets to specify locations of memory
+- IDA uses use dword_410230 instead of [0x410230].",2,30
+indirect addressing,"- memory address values resides in a rgeister.
+- Can increase efficiency becaus eyou can increment the value that resides in a rgeister.
+- Format is base + (index * scale) + displacement.
+•[EAX]: Access dynamically allocated memory (base).
+- [EBP + 0x10]: Access data on the stack (base + displacement).
+• [EAX + EBX * 8]: Access an array with 8-byte structures (base
++ index * scale).
+• [EAX + EBX + 0xC]: Access fields of a two-dimensional array of
+structures (base + index + displacement).",2,31
+effective address,- calculated destination address residing in a register.,2,31
+data structures,"- layout and representaiton of info and how we access it
+- strings, LL, sockets, handles, arrays",2,33
+code-data duality,- The ability for code to reference itself as data or executable code. Think about viruses copying themselves toa file.,2,34
+symbolic constants,"- Some windows APIs accept arguments using flags hich are basically symbolic constants
+- test that corresponds witha  nermical value.
+- can be combined if multiplews apply.
+- flags are OR's when combined.",2,36
+instructions,"- categories of data manipulation, data transfer, branching and codnitional instructions
+- Manipulation - include arithmetic, boolean, and bit manipulation (SHR, SHL)
+- Transfer - MOV, XCHNG
+- Conditional - JMP, CALL, CMP, TEST",2,37
+branching,"- When the CPU jumps from one point of memory to the next (function calls, etc.)
+- EIP is updated.
+- includes unconditional and conditional jumps.
+- looping is also an example of branching.",2,38
+conditional jumping,"- could be boolean or arithmetic
+- large disadvantage of using arithmetic or Boolean instructions to evaluate a condition. They
+modify the value in the destination operand.
+- evaluate a condition without modifying the value in an operand, you can use the CMP and TEST
+A: jump if above
+B: jump if below
+E: jump if equal
+G: jump if greater than
+L: jump if less than
+Z: jump if zero
+N: jump if not condition (for example, JNZ is jump if not zero)
+- Jump instructions with above/below condition codes evaluate the arguments as if they were unsigned.
+- Jump instructions with greater/less than condition codes evaluate the arguments as if they were signed.
+- The developer, not the processor, determines if data is signed or unsigned, by selecting the appropriate
+jump instructions
+(Unsigned) JB: True if Carry flag = 1
+JA: True if both Carry and Zero flag = 0
+(Signed) JL: True if Sign flag != Overflow flag
+JG: True if Zero flag = 0 and Sign flag = Overflow flag
+JE/JZ: True if Zero flag = 1, same opcode",2,40
+Internet Relay Chat (IRC),"- once the msot popular protocol for controlling amlicious code.
+- easy to detect this especially in corporate environments because it is abnormal.
+- Now HTTP is used by malware more frequently.",2,44
+HTTP comms (for amlicious code),"- Create connection by calloing InternetOpen to create network connection and InternetConnect function to initiate connection to the remote server.
+- Build HTTP request with HttpOpenRequest function.
+- Create any custom headers with HttpAddRequestHeaders function
+- Send data with HttpSenRequest
+- Windows connects and sends.
+- use InternetReadFile function to read response",2,45
+TEST,- implied AND,2,52
+Variables,"- local - only accessible by the function that allocates it.
+- Local variables are allocated on the program stack.
+- Stack gets freed when function exits.
+- Global - can be used anywhere within the program and is references using an address
+- Static - can be used only from within the fucntion that allocates it but unlike local it does not get marked for reuse when the function exitst.
+- Global and static have their own segment of memory but are not on the stack.
+- global and static look the same in assembly.",2,53
+functions,"Similar to mathematical functions, three basic components make up a function:
+• Input that is passed into the function (from the caller)
+• The body of the function, which is the code to perform the task
+• The value returned
+- To call a funtion, a branch is typically required.
+- After the function finishes, the CPU continues processing instructions after the location where the function was originally called.
+- This is done by saving the return address on the stack.
+- Because control is transferred when calling a function, certain housekeeping activities must be performed prior to entering the body of the function.
+   - parameters must be set up to be passed in to the fucntion. This is done by placing variables in registers or pushing them onto the stack.
+   - Addess of the next instruction after the function call must also be saved on the stack.
+- When returning from a function some housekeeping must also be done.
+   - return values must be set up
+   - EAX typically holds return values.
+   - Local variables must be removed from the stack and all registers must eb restored.
+   - Then control is transferered to the return pointer (address after function call that we saved.)",2,64
+function prologue,"- code at the beginning of the function that sets up the environment for the function
+- allocating local variables and saving registers.",2,65
+function epilogue,"- code at the end of the function that restores the environment after the function is finished.
+- undo what was done in the prologue
+- cleaning up the stack and restoring registers
+- POPs, opposite of PUSH. Places the value at the top of the stack into the location specified in the operand and increases ESP by 4 bytes.",2,66
+POP,"- opposite of PUSH. Places the value at the top of the stack into the location specified in the operand and increases ESP by 4 bytes.
+- usually used to restore a value previously placed on teh stack.",2,66
+hot patching,"- In the prologue of code compiled with microsoft compilers could be  the instruction mov edi, edi.
+- 2byte equivalent for a NOP.
+- Hot patches an executable when it is running in memory without the need to stop and restart te program.
+- Overwritten with a 2-byte rleative jump that transfers control to another jump that can jump anywhere in memory.
+- This long jump is typically located 5 bytes before the start of the function being patched. 
+- When the function is not patched the 5 bytes that holda relative jump will be 5 NOPs.
+- 2-byte instruction (""mov edi, edi"") was chosen to ensure that the instruction pointer (from a multithreaded process) won't be pointing to the middle of an instruction during the hot-patching process.",2,66
+stack,- Used to store local variables and parameters.,2,67
+frame pointer,"- EBP, unchanging",2,67
+Saved Frame pointer,"- Prior to copying ESP to EBP, we have to save EBP onto the stack to be restored later.",2,67
+EBP,"- Frame pointer
+- EBP -# refers to local variable
+- EBP +# referse to parameters passed in.",2,67
+cdecl,"- most common calling convention for functions
+- arguments passed into the function are pushed onto the stack from right to left (reverse order)
+- the return value from the fucntion is in the EAX register
+- it is up to the code block that calls the function to clean up the stack (remove parameters passed into the funtion).
+- by requiring the calliing code block to clean up the stack, a vbariable number of arguments can be passed into the function.
+- uses ADD after CALL toi cleanup stack.",2,71
+stdcall,"- Alternative to cdecl used when calling functions in the WIN32 API.
+- similar to cdecl expect that the function is responsible for removing the arguments passed in from the stack
+- results in smaller code size because stack cleanup instructions are not required in the code block calling the function.
+- does not use ADD after CALL to cleanup the stack.",2,71
+fastcall,"- calling convention where arguments are first passed in by register and then if extra arguments are required they ar epushed onto the stack.
+- similar to stdcall, callee is responsible for cleaning the stack
+- the return value is in EAX
+- Microsoft and GNU compilers use the ECX and EDX registers to pass arguments, no stack cleanup within fucntion",2,72
+thiscall,"- Calling convention sed in C++ programs
+- ""this"" pointer is passed in the ECX register for Microsoft compilers and pushed onto the stack last by GNU compilers
+- compiler also dictates how the stack cleanup will occur
+- with microsoft compilers, the callee cleans up adn with GNU compilers, the caller performs cleanup.
+- MOV ECX, EAX",2,72
