@@ -1,0 +1,38 @@
+Prompt:
+What does this code do?
+
+Optimizing GCC 4.8.2 -m32:
+
+
+<f>:
+   0:          mov    eax,DWORD PTR [esp+0x4]
+   4:          bswap  eax
+   6:          mov    edx,eax
+   8:          and    eax,0xf0f0f0f
+   d:          and    edx,0xf0f0f0f0
+  13:          shr    edx,0x4
+  16:          shl    eax,0x4
+  19:          or     eax,edx
+  1b:          mov    edx,eax
+  1d:          and    eax,0x33333333
+  22:          and    edx,0xcccccccc
+  28:          shr    edx,0x2
+  2b:          shl    eax,0x2
+  2e:          or     eax,edx
+  30:          mov    edx,eax
+  32:          and    eax,0x55555555
+  37:          and    edx,0xaaaaaaaa
+  3d:          add    eax,eax
+  3f:          shr    edx,1
+  41:          or     eax,edx
+  43:          ret
+
+Simple Answer:
+Reverses the bit order of a 32-bit integer.
+
+Full Answer:
+The mov instructions move the value at the memory address esp+0x4 into the eax register. bswap eax then reverses the byte order of the value in eax.
+
+Next, the value in eax is split into two parts: the upper 16 bits and the lower 16 bits. The upper 16 bits are stored in edx and the lower 16 bits are stored in eax. The and instructions mask off the bits that are not part of each half, so that only the upper 16 bits or lower 16 bits remain. The shr and shl instructions shift the bits in edx and eax, respectively, so that they are in the correct position to be combined. Finally, the or instruction combines the two halves, producing the reversed bit order of the original value.
+
+
